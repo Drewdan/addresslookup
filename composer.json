@@ -1,0 +1,38 @@
+{
+  "name": "drewdan/ukaddresslookup",
+  "description": "A package to provide UK Address Lookup tools in Laravel",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andrew Arscott",
+      "email": "andrew@prometheuscomputing.co.uk"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Drewdan\\UkAddressLookup\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Drewdan\\UkAddressLookup\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "orchestra/testbench": "^8.0",
+    "phpunit/phpunit": "10.1"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Drewdan\\UkAddressLookup\\UkAddressLookupServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "platform": {
+      "php": "8.2"
+    }
+  }
+}
