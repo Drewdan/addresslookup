@@ -1,6 +1,6 @@
 <?php
 
-namespace Models;
+namespace Drewdan\UkAddressLookup\Models;
 
 class Address {
 
@@ -56,8 +56,8 @@ class Address {
 			   'property_number' => $this->property_number,
 		   ],
 		   'full_address' => $this->full_address,
-		   'address_line_1' => $this->line_1,
-		   'address_line_2' => $this->line_2,
+		   'address_line_1' => $this->address_line_1,
+		   'address_line_2' => $this->address_line_2,
 		   'locality' => $this->locality,
 		   'district' => $this->district,
 		   'city' => $this->town_or_city,
