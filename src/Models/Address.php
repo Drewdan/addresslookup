@@ -5,28 +5,28 @@ namespace Drewdan\UkAddressLookup\Models;
 class Address {
 
 	public function __construct(
-		public string $uuid,
-		public string $organisation_name,
-		public string $sub_property_name,
-		public string $sub_property_number,
-		public string $property_name,
-		public string $property_number,
-		public string $full_address,
-		public string $address_line_1,
-		public string $address_line_2,
-		public string $locality,
-		public string $district,
-		public string $town_or_city,
-		public string $county,
-		public string $country,
-		public string $postcode,
-		public string $language_code,
+		public string $id,
+		public ?string $organisation_name,
+		public ?string $sub_property_name,
+		public ?string $sub_property_number,
+		public ?string $property_name,
+		public ?string $property_number,
+		public ?string $full_address,
+		public ?string $address_line_1,
+		public ?string $address_line_2,
+		public ?string $locality,
+		public ?string $district,
+		public ?string $town_or_city,
+		public ?string $county,
+		public ?string $country,
+		public ?string $postcode,
+		public ?string $language_code,
 	) {
 	}
 
 	public static function fromArray(array $data): self {
 		return new self(
-			uuid: $data['uuid'],
+			id: $data['id'],
 			organisation_name: $data['property']['organisation_name'],
 			sub_property_name: $data['property']['sub_property_name'],
 			sub_property_number: $data['property']['sub_property_number'],
@@ -47,7 +47,7 @@ class Address {
 
 	public function toArray(): array {
        return [
-		   'id' => $this->uuid,
+		   'id' => $this->id,
 		   'property' => [
 			   'organisation_name' => $this->organisation_name === '' ? null : $this->organisation_name,
 			   'sub_property_name' => $this->sub_property_name,

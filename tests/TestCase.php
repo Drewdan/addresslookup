@@ -16,16 +16,11 @@ class TestCase extends \Orchestra\Testbench\TestCase {
 	protected function getPackageProviders($app): array {
 		$app->useEnvironmentPath(__DIR__.'/..');
         $app->bootstrapWith([LoadEnvironmentVariables::class]);
-        parent::getEnvironmentSetUp($app);
 
 		return [
 			UkAddressLookupServiceProvider::class,
 			RayServiceProvider::class,
 		];
-	}
-
-	protected function getEnvironmentSetUp($app) {
-		// perform environment setup
 	}
 
 }

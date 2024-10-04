@@ -2,9 +2,14 @@
 
 namespace Drewdan\UkAddressLookup;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\PendingRequest;
+use Drewdan\UkAddressLookup\Models\Address;
+use Drewdan\UkAddressLookup\Models\LookupResults;
+use Drewdan\UkAddressLookup\Models\PostcodeResults;
+use Drewdan\UkAddressLookup\Models\AutoCompleteResults;
+use Drewdan\UkAddressLookup\Exceptions\CreditExhaustedException;
+use Drewdan\UkAddressLookup\Exceptions\RateLimitExceededException;
 
 class ApiClient {
 
@@ -17,19 +22,30 @@ class ApiClient {
 			->throw();
 	}
 
-	public function postcode(string $postcode): Collection {
-		$addresses = $this->client->get('postcode/' . $postcode)->json();
-
-		if ($addresses['status'] === 'no results') {
-			return collect();
+	public function postcode(string $postcode): LookupResults {
+		try {
+			$response = $this->client->get('postcode/' . $postcode)->json();
+		} catch (\Exception $e) {
+			match ($e->getCode()) {
+				402 => throw new CreditExhaustedException(),
+				429 => throw new RateLimitExceededException(),
+				default => throw $e,
+			};
 		}
 
-		return collect($addresses['data']);
-
+		return PostcodeResults::fromArray($response);
 	}
 
-	public function address(string $search) {
-		return $this->client->get('address', ['search' => $search]);
+	public function address(string $search): Address {
+		$address = $this->client->get('address/' . $search)->json();
+
+		return Address::fromArray($address);
+	}
+
+	public function autocomplete(string $search): LookupResults {
+		$results = $this->client->get('autocomplete/' . $search)->json();
+
+		return AutoCompleteResults::fromArray($results);
 	}
 
 }
